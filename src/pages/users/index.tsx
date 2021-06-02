@@ -59,7 +59,7 @@ export default function ListUsers(): JSX.Element {
           return (
             <>
               <Link
-                color="purple.400"
+                color="red.500"
                 onMouseEnter={() => handlePrefetchUser(row.original.id)}
               >
                 <Text fontWeight="bold">{value}</Text>
@@ -80,12 +80,12 @@ export default function ListUsers(): JSX.Element {
                 as="a"
                 size="sm"
                 fontSize="sm"
-                colorScheme="purple"
+                colorScheme="yellow"
                 variant={'solid'}
                 leftIcon={<Icon fontSize="lg" as={RiPencilLine} />}
                 {...(showButtonsText ? {} : { iconSpacing: '0' })}
               >
-                {showButtonsText && 'Editar'}
+                {showButtonsText && 'Edit'}
               </Button>
               <VDivider height={6} borderColor={dividerColor} />
               <Button
@@ -97,7 +97,7 @@ export default function ListUsers(): JSX.Element {
                 leftIcon={<Icon fontSize="lg" as={RiDeleteBin7Line} />}
                 {...(showButtonsText ? {} : { iconSpacing: '0' })}
               >
-                {showButtonsText && 'Excluir'}
+                {showButtonsText && 'Delete'}
               </Button>
             </Flex>
           );
@@ -120,7 +120,7 @@ export default function ListUsers(): JSX.Element {
             as="a"
             size="sm"
             fontSize="md"
-            colorScheme="pink"
+            colorScheme="red"
             leftIcon={<Icon as={RiAddLine} />}
           >
             Create new

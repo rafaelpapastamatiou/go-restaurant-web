@@ -9,8 +9,6 @@ import {
 
 import dynamic from 'next/dynamic';
 
-import { useSession } from 'next-auth/client';
-
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
@@ -68,8 +66,6 @@ const options = {
 const series = [{ name: 'series1', data: [31, 120, 10, 40, 22, 48, 31, 9] }];
 
 export default function Dashboard(): JSX.Element {
-  const [session, loading] = useSession();
-
   const minChildWidth = useBreakpointValue({
     base: '260px',
     xs: '360px',
@@ -107,7 +103,7 @@ export default function Dashboard(): JSX.Element {
         cardTitle="With button"
         titleSize="md"
         extra={
-          <Button as="a" size="sm" fontSize="sm" colorScheme="pink">
+          <Button as="a" size="sm" fontSize="sm" colorScheme="red">
             Criar novo
           </Button>
         }

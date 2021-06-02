@@ -19,7 +19,7 @@ export function ActiveLink({
   const [isActive, setIsActive] = useState(false);
 
   const inactiveLinkColor = useColorModeValue('gray.600', 'gray.50');
-  const activeLinkColor = useColorModeValue('pink.500', 'pink.500');
+  const activeLinkColor = useColorModeValue('red.500', 'red.500');
 
   useEffect(() => {
     if (shouldMatchExactHref) {

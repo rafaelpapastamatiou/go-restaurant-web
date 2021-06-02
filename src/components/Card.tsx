@@ -67,7 +67,7 @@ export function Card({
           >
             <Heading size={titleSize} fontWeight="normal" color={titleColor}>
               {cardTitle}
-              {isRefreshing && <Spinner size="sm" color="pink.500" ml="4" />}
+              {isRefreshing && <Spinner size="sm" color="red.500" ml="4" />}
             </Heading>
             {extra && (
               <Flex ml="auto" align="center" h={65}>
@@ -92,7 +92,7 @@ export function Card({
         {isLoading ? (
           loadingIndicator === 'spinner' ? (
             <Flex justify="center" align="center" flex="1">
-              <Spinner size="xl" color="pink.500" />
+              <Spinner size="xl" color="red.500" />
             </Flex>
           ) : (
             <Box>

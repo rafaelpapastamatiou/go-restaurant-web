@@ -23,6 +23,7 @@ export function Sidebar(): JSX.Element {
   const drawerBg = useColorModeValue('gray.50', 'gray.800');
   const drawerHeaderColor = useColorModeValue('gray.600', 'gray.250');
   const drawerCloseButtonColor = useColorModeValue('gray.600', 'gray.250');
+  const asideBg = useColorModeValue('gray.200', 'gray.900');
 
   if (isDrawerSidebar) {
     return (
@@ -30,7 +31,7 @@ export function Sidebar(): JSX.Element {
         <DrawerOverlay>
           <DrawerContent background={drawerBg} p="4">
             <DrawerCloseButton mt="6" color={drawerCloseButtonColor} />
-            <DrawerHeader color={drawerHeaderColor}>Navegação</DrawerHeader>
+            <DrawerHeader color={drawerHeaderColor}>Navigation</DrawerHeader>
 
             <DrawerBody>
               <SidebarNav />
@@ -42,7 +43,16 @@ export function Sidebar(): JSX.Element {
   }
 
   return (
-    <Box as="aside" w={256} pos="fixed" pr="6">
+    <Box
+      as="aside"
+      w={256}
+      pos="fixed"
+      px="6"
+      bg={asideBg}
+      height="100%"
+      zIndex="999"
+      pt="4"
+    >
       <SidebarNav />
     </Box>
   );

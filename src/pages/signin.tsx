@@ -8,6 +8,7 @@ import {
   useToast,
   Divider,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -17,6 +18,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 
 import { Input } from '../components/Form/Input';
+import { Logo } from '../components/Header/Logo';
 
 type SignInFormData = {
   email: string;
@@ -36,6 +38,17 @@ export default function SignIn(): JSX.Element {
   const [session] = useSession();
 
   const [signInError, setSignInError] = useState('');
+
+  const isMobile = useBreakpointValue({
+    base: true,
+    xs: true,
+    sm: false,
+    md: false,
+    lg: false,
+    xl: false,
+  });
+
+  console.log(isMobile);
 
   useEffect(() => {
     if (session) {
@@ -98,7 +111,18 @@ export default function SignIn(): JSX.Element {
         direction="column"
         onSubmit={handleSubmit(handleSignin)}
         shadow="sm"
+        {...(isMobile
+          ? {
+              height: '100%',
+              maxWidth: 'auto',
+              justify: 'center',
+              borderRadius: 0,
+            }
+          : {})}
       >
+        <Flex justify="center" mb="8">
+          <Logo fontSize="42" />
+        </Flex>
         <Input
           name="accountUrl"
           type="text"
@@ -135,7 +159,7 @@ export default function SignIn(): JSX.Element {
 
         <Button
           type="submit"
-          colorScheme="pink"
+          colorScheme="red"
           marginTop="8"
           size="lg"
           isLoading={isSubmitting}
@@ -151,8 +175,8 @@ export default function SignIn(): JSX.Element {
           <Divider />
         </Flex>
 
-        <Button variant="link" colorScheme="pink" onClick={handleGoToSignUp}>
-          Create a GoRestaurant account
+        <Button variant="link" colorScheme="yellow" onClick={handleGoToSignUp}>
+          Create a new account
         </Button>
       </Flex>
     </Flex>

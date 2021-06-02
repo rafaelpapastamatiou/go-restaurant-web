@@ -103,9 +103,9 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         {leftIcon && (
           <InputLeftElement
             pointerEvents="none"
-            color={!dirty ? 'gray.500' : 'pink.500'}
+            color={!dirty ? 'gray.500' : 'red.500'}
             _focus={{
-              color: 'pink.900',
+              color: 'red.900',
             }}
             children={leftIcon}
             top="auto"
@@ -116,7 +116,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         <ChakraInput
           id={name}
           name={name}
-          focusBorderColor="pink.500"
+          focusBorderColor="red.500"
           backgroundColor="gray.900"
           variant="filled"
           size="lg"
@@ -127,9 +127,9 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         {rightIcon && (
           <InputRightElement
             pointerEvents="none"
-            color={!dirty ? 'gray.500' : 'pink.500'}
+            color={!dirty ? 'gray.500' : 'red.500'}
             _focus={{
-              color: 'pink.900',
+              color: 'red.900',
             }}
             children={rightIcon}
             top="auto"

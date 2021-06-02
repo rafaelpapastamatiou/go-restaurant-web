@@ -144,7 +144,7 @@ export default function CreateUser(): JSX.Element {
             </Link>
             <Button
               type="submit"
-              colorScheme="pink"
+              colorScheme="red"
               isLoading={isSubmitting}
               disabled={isSubmitting}
             >

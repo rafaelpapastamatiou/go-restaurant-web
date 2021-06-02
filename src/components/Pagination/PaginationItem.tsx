@@ -15,7 +15,7 @@ export default function PaginationItem({
   const buttonHoverBackgroundColor = useColorModeValue('gray.450', 'gray.500');
 
   return isCurrent ? (
-    <Button size="sm" fontSize="xs" width="4" colorScheme="pink" disabled>
+    <Button size="sm" fontSize="xs" width="4" colorScheme="red" disabled>
       <Text>{number}</Text>
     </Button>
   ) : (

@@ -137,7 +137,7 @@ export function Table({
                 <Tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                   {currentBreakpoint > 2 && rowSelection && (
                     <Th py="4" color={checkboxTHeadColor} width="8">
-                      <Checkbox colorScheme="pink" />
+                      <Checkbox colorScheme="red" />
                     </Th>
                   )}
                   {headerGroup.headers.map(column => (
@@ -161,7 +161,7 @@ export function Table({
                   >
                     {currentBreakpoint > 2 && rowSelection && (
                       <Td textAlign="center">
-                        <Checkbox colorScheme="pink" />
+                        <Checkbox colorScheme="red" />
                       </Td>
                     )}
                     {row.cells.map(cell => (

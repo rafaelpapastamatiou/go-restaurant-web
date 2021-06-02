@@ -6,7 +6,6 @@ export type User = {
   name: string;
   email: string;
   createdAt: string;
-  created_at?: string;
 };
 
 type GetUsersResponse = {
@@ -31,7 +30,7 @@ export async function getUsers(
     id: user.id,
     name: user.name,
     email: user.email,
-    createdAt: new Date(user.created_at).toLocaleDateString('pt-BR', {
+    createdAt: new Date(user.createdAt).toLocaleDateString('en-US', {
       day: '2-digit',
       month: 'long',
       year: 'numeric',

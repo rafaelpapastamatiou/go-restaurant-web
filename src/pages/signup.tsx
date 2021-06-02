@@ -1,13 +1,13 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import {
   Flex,
   Button,
   Stack,
   Icon,
   useToast,
-  HStack,
   Divider,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -25,6 +25,7 @@ import { useMutation } from 'react-query';
 
 import { Input } from '../components/Form/Input';
 import { api } from '../services/api';
+import { Logo } from '../components/Header/Logo';
 
 type SignUpFormData = {
   name: string;
@@ -45,6 +46,15 @@ const signUpFormSchema = yup.object().shape({
 export default function SignUp(): JSX.Element {
   const router = useRouter();
   const toast = useToast();
+
+  const isMobile = useBreakpointValue({
+    base: true,
+    xs: true,
+    sm: true,
+    md: false,
+    lg: false,
+    xl: false,
+  });
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signUpFormSchema),
@@ -90,7 +100,19 @@ export default function SignUp(): JSX.Element {
         direction="column"
         onSubmit={handleSubmit(handleSignUp)}
         shadow="sm"
+        {...(isMobile
+          ? {
+              height: '100%',
+              maxWidth: 'auto',
+              justify: 'center',
+              borderRadius: 0,
+            }
+          : {})}
       >
+        <Flex justify="center" mb="8">
+          <Logo fontSize="42" />
+        </Flex>
+
         <Stack spacing={4}>
           <Input
             name="name"
@@ -102,7 +124,7 @@ export default function SignUp(): JSX.Element {
             {...register('name')}
           />
 
-          <HStack spacing={4}>
+          <Stack direction={['column', 'row']} spacing={4}>
             <Input
               name="tradeName"
               type="text"
@@ -121,7 +143,7 @@ export default function SignUp(): JSX.Element {
               dirty={dirtyFields.accountUrl}
               {...register('accountUrl')}
             />
-          </HStack>
+          </Stack>
         </Stack>
         <Divider my={8} />
         <Stack spacing={4}>
@@ -148,7 +170,7 @@ export default function SignUp(): JSX.Element {
 
         <Button
           type="submit"
-          colorScheme="pink"
+          colorScheme="red"
           marginTop="8"
           size="lg"
           isLoading={isSubmitting}
@@ -163,11 +185,11 @@ export default function SignUp(): JSX.Element {
           <Divider />
         </Flex>
 
-        <Flex flex={1} justify="center">
+        <Flex justify="center">
           <Button
             variant="link"
             rightIcon={<FiLogIn />}
-            colorScheme="pink"
+            colorScheme="yellow"
             onClick={handleGoToSignIn}
           >
             Go to Sign In
