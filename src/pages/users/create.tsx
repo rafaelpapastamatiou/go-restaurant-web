@@ -25,6 +25,7 @@ import { Input } from '../../components/Form/Input';
 import { api } from '../../services/api';
 import { queryClient } from '../../services/queryClient';
 import { Card } from '../../components/Card';
+import { FiLock, FiMail, FiUser } from 'react-icons/fi';
 
 type CreateUserFormData = {
   name: string;
@@ -70,7 +71,7 @@ export default function CreateUser(): JSX.Element {
     },
   );
 
-  const { isSubmitting, errors } = formState;
+  const { isSubmitting, errors, dirtyFields } = formState;
 
   const handleCreateUser = useCallback<SubmitHandler<CreateUserFormData>>(
     async data => {
@@ -78,14 +79,14 @@ export default function CreateUser(): JSX.Element {
 
       router.push('/users');
     },
-    [createUser.mutateAsync],
+    [createUser, router],
   );
 
   return (
     <Card>
       <Box as="form" onSubmit={handleSubmit(handleCreateUser)}>
         <Heading size="lg" fontWeight="normal">
-          Criar usuário
+          Create user
         </Heading>
 
         <Divider my="6" borderColor="gray.700" />
@@ -94,8 +95,10 @@ export default function CreateUser(): JSX.Element {
           <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
             <Input
               name="name"
-              label="Nome completo"
+              label="Name"
               error={errors.name}
+              leftIcon={<FiUser />}
+              dirty={dirtyFields.name}
               {...register('name')}
             />
 
@@ -103,6 +106,8 @@ export default function CreateUser(): JSX.Element {
               name="email"
               label="E-mail"
               error={errors.email}
+              leftIcon={<FiMail />}
+              dirty={dirtyFields.email}
               {...register('email')}
             />
           </SimpleGrid>
@@ -110,17 +115,21 @@ export default function CreateUser(): JSX.Element {
           <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
             <Input
               name="password"
-              label="Senha"
+              label="Password"
               type="password"
               error={errors.password}
+              dirty={dirtyFields.password}
+              leftIcon={<FiLock />}
               {...register('password')}
             />
 
             <Input
               name="password_confirmation"
-              label="Confirmar senha"
+              label="Confirm password"
               type="password"
               error={errors.password_confirmation}
+              dirty={dirtyFields.password_confirmation}
+              leftIcon={<FiLock />}
               {...register('password_confirmation')}
             />
           </SimpleGrid>

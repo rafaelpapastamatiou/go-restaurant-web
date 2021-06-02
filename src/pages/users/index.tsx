@@ -104,12 +104,12 @@ export default function ListUsers(): JSX.Element {
         },
       },
     ],
-    [showButtonsText],
+    [dividerColor, showButtonsText],
   );
 
   return (
     <Card
-      cardTitle="Usuários"
+      cardTitle="Users"
       titleSize="lg"
       isRefreshing={isFetching && !isLoading}
       isLoading={isLoading}
@@ -123,7 +123,7 @@ export default function ListUsers(): JSX.Element {
             colorScheme="pink"
             leftIcon={<Icon as={RiAddLine} />}
           >
-            Criar novo
+            Create new
           </Button>
         </NextLink>
       }
@@ -134,7 +134,7 @@ export default function ListUsers(): JSX.Element {
         </Flex>
       ) : error ? (
         <Flex justify="center">
-          <Text>Erro ao obter dados dos usuários.</Text>
+          <Text>Error when listing users.</Text>
         </Flex>
       ) : (
         <>

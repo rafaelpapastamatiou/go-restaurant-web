@@ -11,10 +11,10 @@ export function Logo(): JSX.Element {
       w="64"
       color={logoTextColor}
     >
-      dashgo
       <Text as="span" ml="1" color="pink.500">
-        .
+        @
       </Text>
+      gorestaurant
     </Text>
   );
 }

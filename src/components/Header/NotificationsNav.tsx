@@ -1,6 +1,8 @@
-import { HStack, Icon, useColorModeValue } from '@chakra-ui/react';
+import { HStack, Icon, useColorModeValue, IconButton } from '@chakra-ui/react';
 
-import { RiNotificationLine, RiUserAddLine } from 'react-icons/ri';
+import { signOut } from 'next-auth/client';
+
+import { RiLogoutBoxRLine, RiNotificationLine } from 'react-icons/ri';
 
 export function NotificationsNav(): JSX.Element {
   const iconColor = useColorModeValue('gray.500', 'gray.250');
@@ -17,7 +19,13 @@ export function NotificationsNav(): JSX.Element {
       borderColor={borderColor}
     >
       <Icon as={RiNotificationLine} fontSize="20" />
-      <Icon as={RiUserAddLine} fontSize="20" />
+      <IconButton
+        icon={<Icon as={RiLogoutBoxRLine} fontSize="20" />}
+        isRound
+        onClick={() => signOut({ callbackUrl: 'http://localhost:3000/signin' })}
+        aria-label="Sign out"
+        backgroundColor="transparent"
+      />
     </HStack>
   );
 }
