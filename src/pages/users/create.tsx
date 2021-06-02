@@ -26,6 +26,7 @@ type CreateUserFormData = {
 const createUserFormSchema = yup.object().shape({
   name: yup.string().required('Name required'),
   email: yup.string().required('E-mail required').email('Invalid e-mail'),
+  admin: yup.boolean(),
   password: yup
     .string()
     .required('Password required')

@@ -1,6 +1,6 @@
 import { Stack } from '@chakra-ui/react';
 import {
-  RiDashboardLine,
+  // RiDashboardLine,
   RiContactsLine,
   RiFilter2Line,
   RiTableFill,
@@ -13,10 +13,10 @@ import { NavSection } from './NavSection';
 export function SidebarNav(): JSX.Element {
   return (
     <Stack spacing="12" align="flex-start">
-      <NavSection title="GENERAL">
-        <NavLink icon={RiDashboardLine} href="/dashboard">
+      <NavSection title="ACCOUNT">
+        {/* <NavLink icon={RiDashboardLine} href="/dashboard">
           Dashboard
-        </NavLink>
+        </NavLink> */}
         <NavLink icon={RiContactsLine} href="/users">
           Users
         </NavLink>

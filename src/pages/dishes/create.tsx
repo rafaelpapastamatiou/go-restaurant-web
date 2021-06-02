@@ -19,12 +19,14 @@ import { useCategories } from '../../services/hooks/useCategories';
 type CreateDishFormData = {
   name: string;
   price: number;
+  imageUrl?: string;
   categoryId: number;
 };
 
 const createDishFormSchema = yup.object().shape({
   name: yup.string().required('Name required'),
   price: yup.number().required('Price required').min(0),
+  imageUrl: yup.string().url('Image URL must be a valid url'),
   categoryId: yup.number().required('Category required').min(1),
 });
 

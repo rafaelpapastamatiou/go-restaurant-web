@@ -6,8 +6,9 @@ export type Dish = {
   id: number;
   name: string;
   price: number;
+  imgUrl?: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
   category: Category;
 };
 

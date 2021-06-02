@@ -19,6 +19,7 @@ import {
 } from 'react-hook-form';
 import { FiUser, FiMail, FiLock } from 'react-icons/fi';
 import { Input } from '../Input';
+import { Checkbox } from '../Checkbox';
 
 type UserFormData = {
   name: string;
@@ -53,6 +54,15 @@ export function UserForm({
       <Divider my="6" borderColor="gray.700" />
       <VStack spacing="8">
         <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
+          <Checkbox
+            name="admin"
+            label="Is admin"
+            error={errors.admin}
+            {...register('admin')}
+          />
+          <span />
+        </SimpleGrid>
+        <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
           <Input
             name="name"
             label="Name"
@@ -71,17 +81,19 @@ export function UserForm({
             {...register('email')}
           />
         </SimpleGrid>
-
         {type === 'update' && (
-          <Input
-            name="oldPassword"
-            label="Current password"
-            type="password"
-            error={errors.oldPassword}
-            dirty={dirtyFields.oldPassword}
-            leftIcon={<FiLock />}
-            {...register('oldPassword')}
-          />
+          <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
+            <Input
+              name="oldPassword"
+              label="Current password"
+              type="password"
+              error={errors.oldPassword}
+              dirty={dirtyFields.oldPassword}
+              leftIcon={<FiLock />}
+              {...register('oldPassword')}
+            />
+            <span />
+          </SimpleGrid>
         )}
 
         <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">

@@ -19,6 +19,7 @@ import { useUser } from '../../../services/hooks/useUser';
 type UpdateUserFormData = {
   name: string;
   email: string;
+  admin: boolean;
   password: string;
   passwordConfirmation: string;
 };
@@ -26,6 +27,7 @@ type UpdateUserFormData = {
 const updateUserFormSchema = yup.object().shape({
   name: yup.string().required('Name required'),
   email: yup.string().required('E-mail required').email('Invalid e-mail'),
+  admin: yup.boolean(),
   oldPassword: yup.string(),
   password: yup.string().when('oldPassword', {
     is: val => !!val.length,

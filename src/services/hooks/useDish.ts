@@ -9,10 +9,19 @@ export type Category = {
   updatedAt: string;
 };
 
-export async function getDish(id: number): Promise<Category> {
-  const { data } = await api.get<Category>(`/dishes/${id}`);
+export type Dish = {
+  id: number;
+  name: string;
+  price: number;
+  imgUrl?: string;
+  createdAt: string;
+  updatedAt?: string;
+  category: Category;
+};
+export async function getDish(id: number): Promise<Dish> {
+  const { data } = await api.get<Dish>(`/dishes/${id}`);
 
-  const category = {
+  const dish = {
     ...data,
     createdAt: new Date(data.createdAt).toLocaleDateString('en-US', {
       day: '2-digit',
@@ -28,7 +37,7 @@ export async function getDish(id: number): Promise<Category> {
       : null,
   };
 
-  return category;
+  return dish;
 }
 
 export function useDish(id: number) {

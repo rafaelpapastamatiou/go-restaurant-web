@@ -20,6 +20,7 @@ import {
 import { Input } from '../Input';
 import { Select } from '../Select';
 import { NumberInput } from '../NumberInput';
+import { FiLink } from 'react-icons/fi';
 
 type Category = {
   id: number;
@@ -29,6 +30,7 @@ type Category = {
 type DishFormData = {
   name: string;
   price: number;
+  imageUrl?: string;
   categoryId: number;
 };
 
@@ -90,7 +92,14 @@ export function DishForm({
               </option>
             ))}
           </Select>
-          <span />
+          <Input
+            name="imageUrl"
+            label="Image URL"
+            error={errors.imageUrl}
+            dirty={dirtyFields.imageUrl}
+            leftIcon={<FiLink />}
+            {...register('imageUrl')}
+          />
         </SimpleGrid>
       </VStack>
 
