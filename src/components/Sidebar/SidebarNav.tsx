@@ -23,13 +23,13 @@ export function SidebarNav(): JSX.Element {
       </NavSection>
 
       <NavSection title="BACKOFFICE">
-        <NavLink icon={BiDish} href="/forms">
+        <NavLink icon={BiDish} href="/dishes">
           Dishes
         </NavLink>
-        <NavLink icon={RiFilter2Line} href="/automation">
+        <NavLink icon={RiFilter2Line} href="/categories">
           Categories
         </NavLink>
-        <NavLink icon={RiTableFill} href="/automation">
+        <NavLink icon={RiTableFill} href="/tables">
           Tables
         </NavLink>
       </NavSection>

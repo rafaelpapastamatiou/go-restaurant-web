@@ -32,7 +32,6 @@ export function Sidebar(): JSX.Element {
           <DrawerContent background={drawerBg} p="4">
             <DrawerCloseButton mt="6" color={drawerCloseButtonColor} />
             <DrawerHeader color={drawerHeaderColor}>Navigation</DrawerHeader>
-
             <DrawerBody>
               <SidebarNav />
             </DrawerBody>

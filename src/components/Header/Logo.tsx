@@ -15,11 +15,11 @@ export function Logo({ ...rest }: LogoProps): JSX.Element {
       color={logoTextColor}
       {...rest}
     >
-      <Text as="span" color={yellow}>
+      <Text as="span" color="red.500">
         go
       </Text>
 
-      <Text as="span" color="red.500">
+      <Text as="span" color={yellow}>
         restaurant
       </Text>
     </Text>

@@ -13,7 +13,7 @@ import {
 import { RiAddLine, RiDeleteBin7Line, RiPencilLine } from 'react-icons/ri';
 import { Column } from 'react-table';
 
-import { useUsers, User } from '../../services/hooks/useUsers';
+import { useCategories, Category } from '../../services/hooks/useCategories';
 import { queryClient } from '../../services/queryClient';
 import { api } from '../../services/api';
 
@@ -23,32 +23,32 @@ import VDivider from '../../components/VDivider';
 import { PopConfirm } from '../../components/PopConfirm';
 import { useMutation } from 'react-query';
 
-export default function ListUsers(): JSX.Element {
+export default function ListCategories(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading, isFetching, error } = useUsers(currentPage, 10);
+  const { data, isLoading, isFetching, error } = useCategories(currentPage, 10);
 
   const showButtonsText = useBreakpointValue({
     base: false,
     sm: true,
   });
 
-  const deleteUser = useMutation(
+  const deleteCategory = useMutation(
     async (id: number) => {
-      await api.delete(`/users/${id}`);
+      await api.delete(`/categories/${id}`);
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['users']);
+        queryClient.invalidateQueries(['categories']);
       },
     },
   );
 
-  async function handlePrefetchUser(userId: string): Promise<void> {
+  async function handlePrefetchCategory(categoryId: number): Promise<void> {
     await queryClient.prefetchQuery(
-      ['user', userId],
+      ['category', categoryId],
       async () => {
-        const response = await api.get(`users/${userId}`);
+        const response = await api.get(`categories/${categoryId}`);
 
         return response.data;
       },
@@ -58,16 +58,16 @@ export default function ListUsers(): JSX.Element {
     );
   }
 
-  const handleDeleteUser = useCallback(
+  const handleDeleteCategory = useCallback(
     async (id: number) => {
-      await deleteUser.mutateAsync(id);
+      await deleteCategory.mutateAsync(id);
     },
-    [deleteUser],
+    [deleteCategory],
   );
 
   const dividerColor = useColorModeValue('gray.400', 'gray.500');
 
-  const columns = useMemo<Column<User>[]>(
+  const columns = useMemo<Column<Category>[]>(
     () => [
       {
         Header: 'Name',
@@ -80,7 +80,7 @@ export default function ListUsers(): JSX.Element {
             <>
               <Link
                 color="red.500"
-                onMouseEnter={() => handlePrefetchUser(row.original.id)}
+                onMouseEnter={() => handlePrefetchCategory(row.original.id)}
               >
                 <Text fontWeight="bold">{value}</Text>
               </Link>
@@ -88,7 +88,6 @@ export default function ListUsers(): JSX.Element {
           );
         },
       },
-      { Header: 'E-mail', accessor: 'email' },
       { Header: 'Created At', accessor: 'createdAt' },
       {
         Header: 'Actions',
@@ -96,7 +95,7 @@ export default function ListUsers(): JSX.Element {
         Cell({ row }) {
           return (
             <Flex direction="row" align="center">
-              <NextLink href={`/users/${row.original.id}/update`}>
+              <NextLink href={`/categories/${row.original.id}/update`}>
                 <Button
                   as="a"
                   size="sm"
@@ -105,7 +104,7 @@ export default function ListUsers(): JSX.Element {
                   variant={'solid'}
                   leftIcon={<Icon fontSize="lg" as={RiPencilLine} />}
                   {...(showButtonsText ? {} : { iconSpacing: '0' })}
-                  onMouseEnter={() => handlePrefetchUser(row.original.id)}
+                  onMouseEnter={() => handlePrefetchCategory(row.original.id)}
                 >
                   {showButtonsText && 'Edit'}
                 </Button>
@@ -113,9 +112,9 @@ export default function ListUsers(): JSX.Element {
 
               <VDivider height={6} borderColor={dividerColor} />
               <PopConfirm
-                title="Delete user confirmation"
-                message="Are you sure you want to delete this user ?"
-                onConfirm={() => handleDeleteUser(row.original.id)}
+                title="Delete category confirmation"
+                message="Are you sure you want to delete this category ?"
+                onConfirm={() => handleDeleteCategory(row.original.id)}
                 onCancel={() => console.log('cancel')}
               >
                 <Button
@@ -135,18 +134,18 @@ export default function ListUsers(): JSX.Element {
         },
       },
     ],
-    [dividerColor, handleDeleteUser, showButtonsText],
+    [dividerColor, handleDeleteCategory, showButtonsText],
   );
 
   return (
     <Card
-      cardTitle="Users"
+      cardTitle="Categories"
       titleSize="lg"
       isRefreshing={isFetching && !isLoading}
       isLoading={isLoading}
       loadingIndicator="spinner"
       extra={
-        <NextLink href="/users/create">
+        <NextLink href="/categories/create">
           <Button
             as="a"
             size="sm"
@@ -166,12 +165,12 @@ export default function ListUsers(): JSX.Element {
         </Flex>
       ) : error ? (
         <Flex justify="center">
-          <Text>Error when listing users.</Text>
+          <Text>Error when listing categories.</Text>
         </Flex>
       ) : (
         <>
           <Table
-            data={data.users}
+            data={data.categories}
             columns={columns}
             currentPage={currentPage}
             totalCount={data.totalCount}

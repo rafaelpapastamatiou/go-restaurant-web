@@ -170,7 +170,7 @@ export default function SignUp(): JSX.Element {
 
         <Button
           type="submit"
-          colorScheme="red"
+          colorScheme="yellow"
           marginTop="8"
           size="lg"
           isLoading={isSubmitting}
@@ -189,7 +189,7 @@ export default function SignUp(): JSX.Element {
           <Button
             variant="link"
             rightIcon={<FiLogIn />}
-            colorScheme="yellow"
+            colorScheme="red"
             onClick={handleGoToSignIn}
           >
             Go to Sign In

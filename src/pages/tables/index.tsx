@@ -13,7 +13,10 @@ import {
 import { RiAddLine, RiDeleteBin7Line, RiPencilLine } from 'react-icons/ri';
 import { Column } from 'react-table';
 
-import { useUsers, User } from '../../services/hooks/useUsers';
+import {
+  useTables,
+  Table as TableEntityType,
+} from '../../services/hooks/useTables';
 import { queryClient } from '../../services/queryClient';
 import { api } from '../../services/api';
 
@@ -23,32 +26,32 @@ import VDivider from '../../components/VDivider';
 import { PopConfirm } from '../../components/PopConfirm';
 import { useMutation } from 'react-query';
 
-export default function ListUsers(): JSX.Element {
+export default function ListTables(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading, isFetching, error } = useUsers(currentPage, 10);
+  const { data, isLoading, isFetching, error } = useTables(currentPage, 10);
 
   const showButtonsText = useBreakpointValue({
     base: false,
     sm: true,
   });
 
-  const deleteUser = useMutation(
+  const deleteTable = useMutation(
     async (id: number) => {
-      await api.delete(`/users/${id}`);
+      await api.delete(`/tables/${id}`);
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['users']);
+        queryClient.invalidateQueries(['tables']);
       },
     },
   );
 
-  async function handlePrefetchUser(userId: string): Promise<void> {
+  async function handlePrefetchTable(tableId: number): Promise<void> {
     await queryClient.prefetchQuery(
-      ['user', userId],
+      ['table', tableId],
       async () => {
-        const response = await api.get(`users/${userId}`);
+        const response = await api.get(`tables/${tableId}`);
 
         return response.data;
       },
@@ -58,20 +61,20 @@ export default function ListUsers(): JSX.Element {
     );
   }
 
-  const handleDeleteUser = useCallback(
+  const handleDeleteTable = useCallback(
     async (id: number) => {
-      await deleteUser.mutateAsync(id);
+      await deleteTable.mutateAsync(id);
     },
-    [deleteUser],
+    [deleteTable],
   );
 
   const dividerColor = useColorModeValue('gray.400', 'gray.500');
 
-  const columns = useMemo<Column<User>[]>(
+  const columns = useMemo<Column<TableEntityType>[]>(
     () => [
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'Number',
+        accessor: 'number',
         sortType: 'basic',
         Cell(data) {
           const { row, value } = data;
@@ -80,7 +83,7 @@ export default function ListUsers(): JSX.Element {
             <>
               <Link
                 color="red.500"
-                onMouseEnter={() => handlePrefetchUser(row.original.id)}
+                onMouseEnter={() => handlePrefetchTable(row.original.id)}
               >
                 <Text fontWeight="bold">{value}</Text>
               </Link>
@@ -88,7 +91,6 @@ export default function ListUsers(): JSX.Element {
           );
         },
       },
-      { Header: 'E-mail', accessor: 'email' },
       { Header: 'Created At', accessor: 'createdAt' },
       {
         Header: 'Actions',
@@ -96,7 +98,7 @@ export default function ListUsers(): JSX.Element {
         Cell({ row }) {
           return (
             <Flex direction="row" align="center">
-              <NextLink href={`/users/${row.original.id}/update`}>
+              <NextLink href={`/tables/${row.original.id}/update`}>
                 <Button
                   as="a"
                   size="sm"
@@ -105,7 +107,7 @@ export default function ListUsers(): JSX.Element {
                   variant={'solid'}
                   leftIcon={<Icon fontSize="lg" as={RiPencilLine} />}
                   {...(showButtonsText ? {} : { iconSpacing: '0' })}
-                  onMouseEnter={() => handlePrefetchUser(row.original.id)}
+                  onMouseEnter={() => handlePrefetchTable(row.original.id)}
                 >
                   {showButtonsText && 'Edit'}
                 </Button>
@@ -113,9 +115,9 @@ export default function ListUsers(): JSX.Element {
 
               <VDivider height={6} borderColor={dividerColor} />
               <PopConfirm
-                title="Delete user confirmation"
-                message="Are you sure you want to delete this user ?"
-                onConfirm={() => handleDeleteUser(row.original.id)}
+                title="Delete table confirmation"
+                message="Are you sure you want to delete this table ?"
+                onConfirm={() => handleDeleteTable(row.original.id)}
                 onCancel={() => console.log('cancel')}
               >
                 <Button
@@ -135,18 +137,18 @@ export default function ListUsers(): JSX.Element {
         },
       },
     ],
-    [dividerColor, handleDeleteUser, showButtonsText],
+    [dividerColor, handleDeleteTable, showButtonsText],
   );
 
   return (
     <Card
-      cardTitle="Users"
+      cardTitle="Tables"
       titleSize="lg"
       isRefreshing={isFetching && !isLoading}
       isLoading={isLoading}
       loadingIndicator="spinner"
       extra={
-        <NextLink href="/users/create">
+        <NextLink href="/tables/create">
           <Button
             as="a"
             size="sm"
@@ -166,12 +168,12 @@ export default function ListUsers(): JSX.Element {
         </Flex>
       ) : error ? (
         <Flex justify="center">
-          <Text>Error when listing users.</Text>
+          <Text>Error when listing tables.</Text>
         </Flex>
       ) : (
         <>
           <Table
-            data={data.users}
+            data={data.tables}
             columns={columns}
             currentPage={currentPage}
             totalCount={data.totalCount}

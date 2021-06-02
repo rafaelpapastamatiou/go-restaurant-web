@@ -159,7 +159,7 @@ export default function SignIn(): JSX.Element {
 
         <Button
           type="submit"
-          colorScheme="red"
+          colorScheme="yellow"
           marginTop="8"
           size="lg"
           isLoading={isSubmitting}
@@ -175,7 +175,7 @@ export default function SignIn(): JSX.Element {
           <Divider />
         </Flex>
 
-        <Button variant="link" colorScheme="yellow" onClick={handleGoToSignUp}>
+        <Button variant="link" colorScheme="red" onClick={handleGoToSignUp}>
           Create a new account
         </Button>
       </Flex>

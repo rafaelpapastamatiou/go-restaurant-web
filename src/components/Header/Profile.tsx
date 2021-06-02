@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Avatar,
   Box,
@@ -6,9 +7,11 @@ import {
   useColorModeValue,
   IconButton,
   useColorMode,
+  Icon,
+  useBreakpointValue,
 } from '@chakra-ui/react';
-import { RiSunLine, RiMoonLine } from 'react-icons/ri';
-import { useSession } from 'next-auth/client';
+import { RiSunLine, RiMoonLine, RiLogoutBoxRLine } from 'react-icons/ri';
+import { useSession, signOut } from 'next-auth/client';
 
 interface ProfileProps {
   showProfileInfo?: boolean;
@@ -25,17 +28,35 @@ export function Profile({
   const currentThemeIcon = useColorModeValue(<RiSunLine />, <RiMoonLine />);
   const currentThemeIconColor = useColorModeValue('gray.500', 'gray.300');
 
+  const buttonAndAvatarSize = useBreakpointValue({
+    base: 'sm',
+    xs: 'sm',
+    sm: 'md',
+  });
+
   return (
     <Flex align="center">
       <IconButton
         icon={currentThemeIcon}
-        mr="4"
+        mr={['1', '2']}
+        size={buttonAndAvatarSize}
         aria-label="Change theme"
         color={currentThemeIconColor}
         background="transparent"
         isRound
         fontSize="20"
         onClick={toggleColorMode}
+      />
+
+      <IconButton
+        size={buttonAndAvatarSize}
+        mr={['2', '4', '6']}
+        icon={<Icon as={RiLogoutBoxRLine} fontSize="20" />}
+        isRound
+        onClick={() => signOut({ callbackUrl: 'http://localhost:3000/signin' })}
+        aria-label="Sign out"
+        backgroundColor="transparent"
+        color={currentThemeIconColor}
       />
 
       {showProfileInfo && (
@@ -47,7 +68,7 @@ export function Profile({
         </Box>
       )}
 
-      <Avatar size="md" name={session && session.user.name} />
+      <Avatar name={session && session.user.name} size={buttonAndAvatarSize} />
     </Flex>
   );
 }

@@ -13,72 +13,62 @@ import { useMutation } from 'react-query';
 import { api } from '../../services/api';
 import { queryClient } from '../../services/queryClient';
 import { Card } from '../../components/Card';
-import { UserForm } from '../../components/Form/User/UserForm';
+import { CategoryForm } from '../../components/Form/Category/CategoryForm';
 
-type CreateUserFormData = {
+type CreateCategoryFormData = {
   name: string;
-  email: string;
-  admin: boolean;
-  password: string;
-  passwordConfirmation: string;
 };
 
-const createUserFormSchema = yup.object().shape({
+const createCategoryFormSchema = yup.object().shape({
   name: yup.string().required('Name required'),
-  email: yup.string().required('E-mail required').email('Invalid e-mail'),
-  password: yup
-    .string()
-    .required('Password required')
-    .min(6, 'At least 6 characters'),
-  passwordConfirmation: yup
-    .string()
-    .oneOf([null, yup.ref('password')], 'Passwords must be the same'),
 });
 
-export default function CreateUser(): JSX.Element {
+export default function CreateCategory(): JSX.Element {
   const router = useRouter();
 
   const headingColor = useColorModeValue('gray.700', 'gray.100');
 
   const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(createUserFormSchema),
+    resolver: yupResolver(createCategoryFormSchema),
   });
 
-  const createUser = useMutation(
-    async (user: CreateUserFormData) => {
-      const response = await api.post('/users', user);
+  const createCategory = useMutation(
+    async (category: CreateCategoryFormData) => {
+      const response = await api.post('/categories', category);
 
-      return response.data.user;
+      return response.data.category;
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['users']);
+        queryClient.invalidateQueries(['categories']);
       },
     },
   );
 
   const { isSubmitting, errors, dirtyFields } = formState;
 
-  const handleCreateUser = useCallback<SubmitHandler<CreateUserFormData>>(
+  const handleCreateCategory = useCallback<
+    SubmitHandler<CreateCategoryFormData>
+  >(
     async data => {
-      await createUser.mutateAsync(data);
+      await createCategory.mutateAsync(data);
 
-      router.push('/users');
+      router.push('/categories');
     },
-    [createUser, router],
+    [createCategory, router],
   );
 
   return (
     <Card>
       <Heading size="lg" fontWeight="normal" color={headingColor}>
-        Create new user
+        Create new category
       </Heading>
-      <UserForm
+      <CategoryForm
         register={register}
         handleSubmit={handleSubmit}
         dirtyFields={dirtyFields}
         errors={errors}
-        onSubmit={handleCreateUser}
+        onSubmit={handleCreateCategory}
         isSubmitting={isSubmitting}
       />
     </Card>

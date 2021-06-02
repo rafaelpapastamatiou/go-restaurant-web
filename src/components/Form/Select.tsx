@@ -1,37 +1,31 @@
 /* eslint-disable react/no-children-prop */
-import { forwardRef, ForwardRefRenderFunction, ReactNode } from 'react';
+import React, { forwardRef, ForwardRefRenderFunction } from 'react';
 
 import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input as ChakraInput,
-  InputGroup,
-  InputLeftElement,
-  InputProps as ChakraInputProps,
-  InputRightElement,
+  Select as ChakraSelect,
+  SelectProps as ChakraSelectProps,
   useColorModeValue,
+  Spinner,
 } from '@chakra-ui/react';
+import { FiChevronDown } from 'react-icons/fi';
 
 import { FieldError } from 'react-hook-form';
 
-interface InputProps extends ChakraInputProps {
+interface SelectProps extends ChakraSelectProps {
   name: string;
   label?: string;
   error?: FieldError;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-  dirty?: boolean;
+  isLoading?: boolean;
 }
 
-const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
+const SelectBase: ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
   {
     name,
     label,
     error = null,
-    leftIcon,
-    rightIcon,
-    dirty,
     margin,
     m,
     my,
@@ -60,6 +54,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     paddingBottom,
     pl,
     paddingLeft,
+    isLoading,
     ...rest
   },
   ref,
@@ -103,43 +98,23 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     >
       {!!label && <FormLabel htmlFor={name}>{label}</FormLabel>}
 
-      <InputGroup alignItems="center">
-        {leftIcon && (
-          <InputLeftElement
-            pointerEvents="none"
-            color={!dirty ? 'gray.500' : 'red.500'}
-            children={leftIcon}
-            top="auto"
-            fontSize="xl"
-            pl="1"
-          />
-        )}
-        <ChakraInput
-          id={name}
-          name={name}
-          focusBorderColor="red.500"
-          backgroundColor={inputBackgroundColor}
-          color={inputTextColor}
-          variant="filled"
-          size="lg"
-          _hover={{ backgroundColor: inputBackgroundColor }}
-          ref={ref}
-          {...rest}
-        />
-        {rightIcon && (
-          <InputRightElement
-            pointerEvents="none"
-            color={!dirty ? 'gray.500' : 'red.500'}
-            children={rightIcon}
-            top="auto"
-            pr="1"
-          />
-        )}
-      </InputGroup>
+      <ChakraSelect
+        id={name}
+        name={name}
+        focusBorderColor="red.500"
+        backgroundColor={inputBackgroundColor}
+        color={inputTextColor}
+        variant="filled"
+        size="lg"
+        _hover={{ backgroundColor: inputBackgroundColor }}
+        ref={ref}
+        icon={isLoading ? <Spinner /> : <FiChevronDown />}
+        {...rest}
+      />
 
       {!!error && <FormErrorMessage>{error.message}</FormErrorMessage>}
     </FormControl>
   );
 };
 
-export const Input = forwardRef(InputBase);
+export const Select = forwardRef(SelectBase);

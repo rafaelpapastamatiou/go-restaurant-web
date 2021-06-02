@@ -2,9 +2,10 @@ import { useQuery } from 'react-query';
 import { api } from '../api';
 
 export type User = {
-  id: string;
+  id: number;
   name: string;
   email: string;
+  admin: boolean;
   createdAt: string;
 };
 
@@ -30,6 +31,7 @@ export async function getUsers(
     id: user.id,
     name: user.name,
     email: user.email,
+    admin: user.admin,
     createdAt: new Date(user.createdAt).toLocaleDateString('en-US', {
       day: '2-digit',
       month: 'long',
@@ -46,5 +48,6 @@ export async function getUsers(
 export function useUsers(page: number, per_page = 10) {
   return useQuery(['users', page], () => getUsers(page, per_page), {
     staleTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: true,
   });
 }

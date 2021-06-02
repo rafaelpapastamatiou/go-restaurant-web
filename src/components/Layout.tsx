@@ -37,13 +37,14 @@ export function Layout({ children }: LayoutProps): JSX.Element {
 
       <Flex
         flex="1"
+        h="100%"
         w="100%"
         maxW="100%"
-        my="6"
-        mx="auto"
         pr="6"
+        pt="2"
         pl={isDrawerSidebar ? '6' : undefined}
         mt="20"
+        pb="3"
       >
         <Sidebar />
 

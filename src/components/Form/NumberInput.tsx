@@ -1,37 +1,35 @@
 /* eslint-disable react/no-children-prop */
-import { forwardRef, ForwardRefRenderFunction, ReactNode } from 'react';
+import { forwardRef, ForwardRefRenderFunction } from 'react';
 
 import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input as ChakraInput,
-  InputGroup,
-  InputLeftElement,
-  InputProps as ChakraInputProps,
-  InputRightElement,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput as ChakraNumberInput,
+  NumberInputField,
+  NumberInputFieldProps as ChakraNumberInputFieldProps,
+  NumberInputStepper,
   useColorModeValue,
 } from '@chakra-ui/react';
 
 import { FieldError } from 'react-hook-form';
 
-interface InputProps extends ChakraInputProps {
+interface NumberInputProps extends ChakraNumberInputFieldProps {
   name: string;
   label?: string;
   error?: FieldError;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-  dirty?: boolean;
 }
 
-const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
+const NumberInputBase: ForwardRefRenderFunction<
+  HTMLInputElement,
+  NumberInputProps
+> = (
   {
     name,
     label,
     error = null,
-    leftIcon,
-    rightIcon,
-    dirty,
     margin,
     m,
     my,
@@ -103,43 +101,33 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     >
       {!!label && <FormLabel htmlFor={name}>{label}</FormLabel>}
 
-      <InputGroup alignItems="center">
-        {leftIcon && (
-          <InputLeftElement
-            pointerEvents="none"
-            color={!dirty ? 'gray.500' : 'red.500'}
-            children={leftIcon}
-            top="auto"
-            fontSize="xl"
-            pl="1"
-          />
-        )}
-        <ChakraInput
+      <ChakraNumberInput
+        size="lg"
+        focusBorderColor="red.500"
+        variant="filled"
+        min={0}
+        precision={2}
+        step={0.1}
+        clampValueOnBlur={false}
+      >
+        <NumberInputField
+          backgroundColor={inputBackgroundColor}
+          _hover={{ backgroundColor: inputBackgroundColor }}
+          color={inputTextColor}
+          ref={ref}
           id={name}
           name={name}
-          focusBorderColor="red.500"
-          backgroundColor={inputBackgroundColor}
-          color={inputTextColor}
-          variant="filled"
-          size="lg"
-          _hover={{ backgroundColor: inputBackgroundColor }}
-          ref={ref}
           {...rest}
         />
-        {rightIcon && (
-          <InputRightElement
-            pointerEvents="none"
-            color={!dirty ? 'gray.500' : 'red.500'}
-            children={rightIcon}
-            top="auto"
-            pr="1"
-          />
-        )}
-      </InputGroup>
+        <NumberInputStepper>
+          <NumberIncrementStepper />
+          <NumberDecrementStepper />
+        </NumberInputStepper>
+      </ChakraNumberInput>
 
       {!!error && <FormErrorMessage>{error.message}</FormErrorMessage>}
     </FormControl>
   );
 };
 
-export const Input = forwardRef(InputBase);
+export const NumberInput = forwardRef(NumberInputBase);
