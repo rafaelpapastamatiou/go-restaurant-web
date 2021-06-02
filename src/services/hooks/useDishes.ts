@@ -6,7 +6,7 @@ export type Dish = {
   id: number;
   name: string;
   price: number;
-  imgUrl?: string;
+  imageUrl?: string;
   createdAt: string;
   updatedAt?: string;
   category: Category;

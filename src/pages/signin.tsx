@@ -89,7 +89,7 @@ export default function SignIn(): JSX.Element {
         email,
         password,
         accountUrl,
-        callbackUrl: 'http://localhost:3000/dashboard',
+        callbackUrl: 'http://localhost:3000/users',
       });
     },
     [],
