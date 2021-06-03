@@ -48,6 +48,12 @@ export default function SignIn(): JSX.Element {
     xl: false,
   });
 
+  const logoSize = useBreakpointValue({
+    base: 42,
+    xs: 42,
+    sm: 52,
+  });
+
   console.log(isMobile);
 
   useEffect(() => {
@@ -100,7 +106,12 @@ export default function SignIn(): JSX.Element {
   }, [router]);
 
   return (
-    <Flex width="100vw" height="100vh" align="center" justify="center">
+    <Flex
+      width="100vw"
+      align="center"
+      justify="center"
+      {...(isMobile ? { minHeight: '100vh' } : { height: '100vh' })}
+    >
       <Flex
         as="form"
         width="100%"
@@ -113,7 +124,8 @@ export default function SignIn(): JSX.Element {
         shadow="sm"
         {...(isMobile
           ? {
-              height: '100%',
+              minHeight: '100vh',
+              height: 'auto',
               maxWidth: 'auto',
               justify: 'center',
               borderRadius: 0,
@@ -121,7 +133,7 @@ export default function SignIn(): JSX.Element {
           : {})}
       >
         <Flex justify="center" mb="8">
-          <Logo fontSize="42" />
+          <Logo fontSize={logoSize} />
         </Flex>
         <Input
           name="accountUrl"

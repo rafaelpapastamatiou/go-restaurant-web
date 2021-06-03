@@ -56,6 +56,12 @@ export default function SignUp(): JSX.Element {
     xl: false,
   });
 
+  const logoSize = useBreakpointValue({
+    base: 42,
+    xs: 42,
+    sm: 52,
+  });
+
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signUpFormSchema),
   });
@@ -89,7 +95,12 @@ export default function SignUp(): JSX.Element {
   }, [router]);
 
   return (
-    <Flex width="100vw" height="100vh" align="center" justify="center">
+    <Flex
+      width="100vw"
+      align="center"
+      justify="center"
+      {...(isMobile ? { minHeight: '100vh' } : { height: '100vh' })}
+    >
       <Flex
         as="form"
         width="100%"
@@ -102,7 +113,8 @@ export default function SignUp(): JSX.Element {
         shadow="sm"
         {...(isMobile
           ? {
-              height: '100%',
+              minHeight: '100vh',
+              height: 'auto',
               maxWidth: 'auto',
               justify: 'center',
               borderRadius: 0,
@@ -110,7 +122,7 @@ export default function SignUp(): JSX.Element {
           : {})}
       >
         <Flex justify="center" mb="8">
-          <Logo fontSize="42" />
+          <Logo fontSize={logoSize} />
         </Flex>
 
         <Stack spacing={4}>
