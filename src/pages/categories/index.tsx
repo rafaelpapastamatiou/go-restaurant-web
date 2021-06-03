@@ -9,6 +9,7 @@ import {
   Link,
   useBreakpointValue,
   useColorModeValue,
+  Box,
 } from '@chakra-ui/react';
 import { RiAddLine, RiDeleteBin7Line, RiPencilLine } from 'react-icons/ri';
 import { Column } from 'react-table';
@@ -88,7 +89,25 @@ export default function ListCategories(): JSX.Element {
           );
         },
       },
-      { Header: 'Created At', accessor: 'createdAt' },
+      {
+        Header() {
+          return (
+            <div
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Created At
+            </div>
+          );
+        },
+        accessor: 'createdAt',
+        Cell(data) {
+          const { value } = data;
+
+          return <Box textAlign="center">{value}</Box>;
+        },
+      },
       {
         Header: 'Actions',
         id: 'actions',

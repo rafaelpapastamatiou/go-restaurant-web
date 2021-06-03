@@ -9,6 +9,7 @@ import {
   Link,
   useBreakpointValue,
   useColorModeValue,
+  Box,
 } from '@chakra-ui/react';
 import { RiAddLine, RiDeleteBin7Line, RiPencilLine } from 'react-icons/ri';
 import { Column } from 'react-table';
@@ -88,10 +89,44 @@ export default function ListDishes(): JSX.Element {
           );
         },
       },
-      { Header: 'Category ', accessor: row => row.category.name },
       {
-        Header: 'Price ',
-        accessor: row => row.price,
+        Header() {
+          return (
+            <div
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Category
+            </div>
+          );
+        },
+        accessor: 'category.name' as 'category',
+        Cell(data) {
+          const { value } = data;
+
+          return (
+            <>
+              <Box textAlign="center">
+                <Text>{value}</Text>
+              </Box>
+            </>
+          );
+        },
+      },
+      {
+        Header() {
+          return (
+            <div
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Price
+            </div>
+          );
+        },
+        accessor: 'price',
         Cell(data) {
           const { value } = data;
 
@@ -104,12 +139,32 @@ export default function ListDishes(): JSX.Element {
 
           return (
             <>
-              <Text>{priceFormatted}</Text>
+              <Box textAlign="center">
+                <Text>{priceFormatted}</Text>
+              </Box>
             </>
           );
         },
       },
-      { Header: 'Created At', accessor: 'createdAt' },
+      {
+        Header() {
+          return (
+            <div
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Created At
+            </div>
+          );
+        },
+        accessor: 'createdAt',
+        Cell(data) {
+          const { value } = data;
+
+          return <Box textAlign="center">{value}</Box>;
+        },
+      },
       {
         Header: 'Actions',
         id: 'actions',

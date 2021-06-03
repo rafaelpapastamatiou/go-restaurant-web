@@ -9,6 +9,7 @@ import {
   Link,
   useBreakpointValue,
   useColorModeValue,
+  Box,
 } from '@chakra-ui/react';
 import { RiAddLine, RiDeleteBin7Line, RiPencilLine } from 'react-icons/ri';
 import { Column } from 'react-table';
@@ -22,6 +23,7 @@ import { Table } from '../../components/Table';
 import VDivider from '../../components/VDivider';
 import { PopConfirm } from '../../components/PopConfirm';
 import { useMutation } from 'react-query';
+import { FiCheck } from 'react-icons/fi';
 
 export default function ListUsers(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,7 +46,7 @@ export default function ListUsers(): JSX.Element {
     },
   );
 
-  async function handlePrefetchUser(userId: string): Promise<void> {
+  async function handlePrefetchUser(userId: number): Promise<void> {
     await queryClient.prefetchQuery(
       ['user', userId],
       async () => {
@@ -88,8 +90,44 @@ export default function ListUsers(): JSX.Element {
           );
         },
       },
-      { Header: 'E-mail', accessor: 'email' },
-      { Header: 'Created At', accessor: 'createdAt' },
+      {
+        Header: 'E-mail',
+        accessor: 'email',
+      },
+      {
+        Header() {
+          return <Box textAlign="center">Admin</Box>;
+        },
+        accessor: 'admin',
+        Cell(data) {
+          const { value } = data;
+
+          return value ? (
+            <Flex justify="center">
+              <Icon as={FiCheck} fontSize="18" color="red.500" />
+            </Flex>
+          ) : null;
+        },
+      },
+      {
+        Header() {
+          return (
+            <div
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Created At
+            </div>
+          );
+        },
+        accessor: 'createdAt',
+        Cell(data) {
+          const { value } = data;
+
+          return <Box textAlign="center">{value}</Box>;
+        },
+      },
       {
         Header: 'Actions',
         id: 'actions',
