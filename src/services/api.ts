@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { signOut } from 'next-auth/client';
+import Router from 'next/router';
 
 export const nextApi = axios.create({
   baseURL: '/api',
@@ -21,3 +23,19 @@ api.interceptors.request.use(async request => {
 
   return request;
 });
+
+api.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    const { status } = error.response;
+
+    if (status === 401) {
+      signOut();
+      Router.push('/signin');
+    }
+
+    return Promise.reject(error);
+  },
+);
